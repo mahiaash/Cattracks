@@ -10,37 +10,44 @@ app = Flask(__name__)
 UPLOAD_FOLDER = os.path.basename('uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+DB = {
+    1 : {'name': 'Bella'},
+    2 : {'name': 'Sam'}
+}
+
+
 #view
 @app.route('/')
 def hello_world():
     return render_template('index.html')
 
+@app.route('/cats')
+def getCats():
+    return jsonify(DB)
+
+
 #add cat
-@app.route('/addcat', methods=['POST'])
+@app.route('/cat/add', methods=['POST'])
 def addCat():
     if request.method == 'POST':
         #get cat data and insert to database
+        data = request.form
+        new_key = max(DB.keys()) + 1
+        DB[new_key] = data
         
         #return success or error message
-        return jsonify()
+        return jsonify(DB)
     else:
         return abort(400)
 
-#add cat location
-@app.route('/<cat_id>')
-def addPlaceImage(cat_id):
-    if request.method == 'POST':
-        data = request.form
-        #get location data 
-
-        #if there is an image file add image 
-
-        #insert into database
-
-        #return success or error message
-        return jsonify({})
+#get cat info
+@app.route('/cat/<int:cat_id>')
+def getCatInfo(cat_id):
+    if cat_id in DB:
+        return jsonify(DB[cat_id])
     else:
-        return abort(400)
+        return abort(404)
+
 
 
 #upload image example from https://stackoverflow.com/questions/28982974/flask-restful-upload-image
