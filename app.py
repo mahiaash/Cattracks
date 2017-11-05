@@ -16,9 +16,9 @@ DB = {
     1 : {
         'name': 'Bella',
         'color': 'black',
-        'desc': 'none',
-        'spray/neut': 'unknown',
-        'feral/domestic': 'unknown',
+        'description': 'none',
+        'spayed_neutured': 'unknown',
+        'feral_domestic': 'unknown',
         'points': [
             {'image':'angry.jpg','latlng': (43.003158, -78.787532), 'timestamp': 1509768000,'desc':''},
             {'image':'angry.jpg','latlng': (43.004028, -78.785915), 'timestamp': 1509796800,'desc':''}
@@ -26,9 +26,9 @@ DB = {
     2 : {
         'name': 'Sam',
         'color': 'black w brown',
-        'desc': 'none',
-        'spray/neut': 'unknown',
-        'feral/domestic': 'unknown',
+        'description': 'none',
+        'spayed_neutured': 'unknown',
+        'feral_domestic': 'unknown',
         'points': [
             {'image':'angry.jpg','latlng': (43.004278, -78.789974), 'timestamp': 1509768000,'desc':''},
             {'image':'angry.jpg','latlng': (43.006263, -78.785919), 'timestamp': 1509796800,'desc':''}
@@ -54,10 +54,11 @@ def getCats():
 def addCat():
     if request.method == 'POST':
         #get cat data and insert to database
-        data = request.form
-        print(request.form)
-        # new_key = max(DB.keys()) + 1
-        # DB[new_key] = data
+        data = json.loads(request.data)
+        new_key = max(DB.keys()) + 1
+
+        data['points'] = []
+        DB[new_key] = data
         
         #return success or error message
         return jsonify(DB)

@@ -29,8 +29,12 @@
       background-color: black;
     }
 
-    #map {
+    .top-row {
       height: 500px;
+    }
+
+    .all-cats {
+      overflow-y: scroll;
     }
   </style>
 
@@ -61,10 +65,13 @@
 <body style="background-image:url('https://image.ibb.co/duYOiG/rsz_11rsz_1rsz_kitty_tracks.png')">
 
   <!-- <img src="{{url_for( 'static', filename='uploads/angry.jpg' )}} "> -->
-  <div class="container ">
-    <div class="row ">
-      <div class="col-9 " id='map'></div>
-      <div class="col-3 " id='cats'></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-9 top-row" id='map'></div>
+      <div class="col-3 top-row all-cats" id='cats'></div>
+    </div>
+    <div class="row">
+      <div style="background-color: white;" id="description">click on a cat for more info...</div>
     </div>
   </div>
 
@@ -79,68 +86,59 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="/cat/add " method="post " enctype="multipart/form-data ">
+          <form id="add-cat" onsubmit="addCat();return false;">
             <div class="form-group ">
-              <label for="name "> Name </label>
+              <label for="name"> Name </label>
               <br>
-              <input type="text " name="name " placeholder="Name ">
+              <input type="text" name="name" placeholder="Name ">
             </div>
             <!-- Color textbox and label -->
             <div class="form-group ">
-              <label for="color "> Color </label>
+              <label for="color"> Color </label>
               <br>
-              <input type="text " name="color " placeholder="Brown, Black, Etc ">
+              <input type="text" name="color" placeholder="Brown, Black, Etc ">
             </div>
             <!-- Description Label -->
-            <div class="form-group ">
-              <label for="desc "> Description
+            <div class="form-group">
+              <label for="desc"> Description
                 <label>
                   <br>
             </div>
             <!-- Creation of the textarea -->
-            <div class="form-group ">
-              <textarea class="form-control " id="description " rows="3 "> </textarea>
+            <div class="form-group">
+              <textarea class="form-control" name="description" id="description" rows="3 "> </textarea>
             </div>
             <!-- Buttons for Unknown, spayed/neutured, natural -->
             
             <div data-toggle="buttons">
               <label class="btn btn-secondary active">
-                <input type="radio" name="options" autocomplete="off" checked> Unknown
+                <input type="radio" name="Spayed/Neutured" value="Unknown" autocomplete="off" checked> Unknown
               </label>
               <label class="btn btn-secondary">
-                <input type="radio" name="options" autocomplete="off"> Spayed/Neutured
+                <input type="radio" name="Spayed/Neutured" value="Spayed/Neutured" autocomplete="off"> Spayed/Neutured
               </label>
               <label class="btn btn-secondary ">
-                <input type="radio" name="options" autocomplete="off"> Natural
+                <input type="radio" name="Spayed/Neutured" value="Natural" autocomplete="off"> Natural
               </label>
             </div>
-            <!-- Buttons for Feral, Domestic, Uknown -->
+            <!-- Buttons for Feral, Domestic, Unknown -->
             <br>
 
             <div data-toggle="buttons">
               <label class="btn btn-secondary active">
-                <input type="radio" checked autocomplete="off"> Unknown
+                <input type="radio" name="Feral/Domestic" value="Unknown" checked autocomplete="off"> Unknown
               </label>
               <label class="btn btn-secondary ">
-                <input type="radio" autocomplete="off"> Domestic
+                <input type="radio" name="Feral/Domestic" value="Domestic" autocomplete="off"> Domestic
               </label>
               <label class="btn btn-secondary ">
-                <input type="radio" autocomplete="off"> Feral
+                <input type="radio" name="Feral/Domestic" value="Feral" autocomplete="off"> Feral
               </label>
-            </div>
-            
+            </div><br/>
             <div class="form-group ">
-                <input type="submit " value="Add a cat" class="btn btn-primary ">
+                <input type="submit" value="Add a cat" class="btn btn-primary ">
             </div>
-
           </form>
-          
-        </div>
-
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
@@ -149,6 +147,7 @@
 
 
   <script>
+
     //init map
     var map = L.map('map').setView([43.003051, -78.787842], 15);
 
@@ -162,10 +161,13 @@
 
 
     const cats_div = document.getElementById('cats')
+    const description_div = document.getElementById('description')
+    let global_data;
 
     fetch('http://localhost:5000/cats')
       .then(res => res.json())
       .then(data => {
+        global_data = data;
         const amt_cats = Object.keys(data).length;
         const color_scale = chroma.scale('Spectral').colors(amt_cats);
         const cats = Object.keys(data).reduce((prev, cur, index) => {
@@ -203,20 +205,49 @@
             opacity: 0.5
           }).addTo(map)
 
+          let image = "";
+          //if there is an image, get the first image
+          if(data[cur].points.length > 0){
+            image = `/static/uploads/${data[cur].points[0].image}`
+          }
 
           return prev +=
-            `<div class="card " style="margin-bottom: 10px; ">
-                        <img class="card-img-top " src="/static/uploads/${data[cur].points[0].image} ">
+            `<div onclick="showCat(${cur})" class="card" style="margin-bottom: 10px; ">
+                        <img class="card-img-top" src=${image}>
                         <div class="card-block ">
-                        <h4 class="card-title " style="background-color: ${color_scale[index]} ">${data[cur].name}</h4>
+                        <h4 class="card-title " style="color:white; background-color: ${color_scale[index]} ">${data[cur].name}</h4>
                         <p class="card-text ">${data[cur].color}</p>
                         </div>
                         </div>`
         }, '')
         cats_div.innerHTML = cats
+        return Object.keys(data)
 
       })
       .catch(error => console.log(error))
+
+      function showCat(id){
+        description_div.innerHTML = `<h1>${global_data[id].name}</h1><input type="button" value="Add picture or location" class="btn btn-primary" onclick="alert('hello')"/>`
+      }
+
+      //add Cat using POST request from the form
+      function addCat(){
+      const form = document.getElementById('add-cat').elements
+      
+      const name = form.namedItem("name").value
+      const color = form.namedItem("color").value
+      const description = form.namedItem("description").value
+      const spayed_neutured = form.namedItem("Spayed/Neutured").value
+      const feral_domestic = form.namedItem("Feral/Domestic").value
+
+      fetch('http://localhost:5000/cat/add', {
+                method: 'POST',
+                headers : new Headers(),
+                body:JSON.stringify({name, color, description, spayed_neutured, feral_domestic})
+            }).then((res) => res.json())
+            .then((data) =>  location.reload())
+            .catch((error)=> console.log(error))
+    }
   </script>
 
 </body>
