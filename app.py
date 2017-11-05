@@ -1,6 +1,6 @@
-from flask import Flask, render_template, request, jsonify, abort
+from flask import Flask, render_template, request, jsonify, abort, redirect, url_for
 from flask_cors import CORS
-import os, json
+import os, json, time
 # from clarifai.rest import ClarifaiApp
 # from clarifai.rest import Image as ClImage
 
@@ -9,7 +9,7 @@ import os, json
 app = Flask(__name__)
 CORS(app)
 
-UPLOAD_FOLDER = os.path.basename('uploads')
+UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 DB = {
@@ -35,19 +35,14 @@ DB = {
         ]},
 }
 
-#description
-@app.route('/description')
-def desc():
-    return render_template('description.html')
 #view
 @app.route('/')
-def hello_world():
+def index():
     return render_template('index.html')
 
 @app.route('/cats')
 def getCats():
     return jsonify(DB)
-
 
 #add cat
 @app.route('/cat/add', methods=['POST'])
@@ -73,24 +68,30 @@ def getCatInfo(cat_id):
     else:
         return abort(404)
 
+#add picture or location
+@app.route('/cat/<int:cat_id>/add', methods=['POST'])
+def addPoint(cat_id):
+    if cat_id in DB and request.method == 'POST':
+        #save image
+        if 'image' in request.files:
+            file = request.files['image']
+            filename = file.filename
+            f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(f)
+        else:
+            filename = ''
 
-
-#upload image example from https://stackoverflow.com/questions/28982974/flask-restful-upload-image
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    file = request.files['image']
-    f = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    
-    # add your custom code to check that the uploaded file is a valid image and not a malicious file (out-of-scope for this post)
-
-    file.save(f)
-
-    #check, if there is a cat in the photo
-    # model = app.models.get('general-v1.3')
-    # image = ClImage(file_obj=open('/home/user/image.jpeg', 'rb'))
-    # model.predict([image])
-
-    return render_template('index.html')
+        timestamp = time.time()
+        data = request.form
+        
+        DB[cat_id]['points'].append({'image': filename,
+                                    'latlng': (float(data['latitude']), float(data['longitude'])), 
+                                    'timestamp': timestamp,
+                                    'desc': data['description']})
+        # return jsonify(DB[cat_id])
+        return redirect(url_for('index'))
+    else:
+        return abort(404)
 
 
 if __name__ == "__main__":
