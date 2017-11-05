@@ -165,7 +165,7 @@
     let global_data;
 
     //get data from 'database'
-    fetch('http://localhost:5000/cats')
+    fetch('{{ url_for("getCats") }}')
       .then(res => res.json())
       .then(data => {
         global_data = data;
@@ -289,7 +289,7 @@
       const spayed_neutured = form.namedItem("Spayed/Neutured").value
       const feral_domestic = form.namedItem("Feral/Domestic").value
 
-      fetch('http://localhost:5000/cat/add', {
+      fetch('{{ url_for("addCat") }}', {
                 method: 'POST',
                 headers : new Headers(),
                 body:JSON.stringify({name, color, description, spayed_neutured, feral_domestic})
