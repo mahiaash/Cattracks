@@ -44,10 +44,6 @@
   <a class="navbar-brand" href="/">
     <img src="https://image.ibb.co/kCPDiG/rsz_1cat_tracks_title.png" alt="rsz_1cat_tracks_title" alt="cat_tracks_title" border="0">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
-    aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
   <div class="form-inline" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -251,6 +247,11 @@
 
         description_div.innerHTML = `
         <h1>${global_data[id].name}</h1>
+        <p>Color: ${global_data[id].color}</p>
+        <p>Description: ${global_data[id].description}</p>
+        <p>Feral/Domestic: ${global_data[id].feral_domestic}</p>
+        <p>Name: ${global_data[id].Name}</p>
+        <p>Spayed/Neutured: ${global_data[id].spayed_neutured}</p>
         <hr/>
 
         <form method="POST" action="/cat/${id}/add" enctype="multipart/form-data">

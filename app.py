@@ -25,14 +25,24 @@ DB = {
         ]},
     2 : {
         'name': 'Sam',
-        'color': 'black w brown',
+        'color': 'Silver w Black stripes',
         'description': 'none',
         'spayed_neutured': 'unknown',
         'feral_domestic': 'unknown',
         'points': [
-            {'image':'angry.jpg','latlng': (43.004278, -78.789974), 'timestamp': 1509768000,'desc':''},
-            {'image':'angry.jpg','latlng': (43.006263, -78.785919), 'timestamp': 1509796800,'desc':''}
+            {'image':'j09w6p65.jpg','latlng': (43.004278, -78.789974), 'timestamp': 1509768000,'desc':''},
+            {'image':'j09w6p65.jpg','latlng': (43.006263, -78.785919), 'timestamp': 1509796800,'desc':''}
         ]},
+      3 : {
+        'name': 'Octocat',
+        'color': 'Black',
+        'description': 'Somehow it looks like both a cat and an octopus',
+        'spayed_neutured': 'unknown',
+        'feral_domestic': 'unknown',
+        'points': [
+            {'image':'Octocat.png','latlng': (43.002700, -78.787421), 'timestamp': 1509768000,'desc':''},
+           
+        ]},  
 }
 
 #view
