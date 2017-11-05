@@ -41,7 +41,7 @@
 </head>
 
 <nav class="navbar sticky-top navbar-dark darknav">
-  <a class="navbar-brand" href="https://ibb.co/hFw4qw">
+  <a class="navbar-brand" href="/">
     <img src="https://image.ibb.co/kCPDiG/rsz_1cat_tracks_title.png" alt="rsz_1cat_tracks_title" alt="cat_tracks_title" border="0">
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
@@ -242,7 +242,10 @@
       })
       .catch(error => console.log(error))
 
+      //when a cat is clicked, pan to latest point and change the description 
       function showCat(id){
+        const latest_point = global_data[id].points[global_data[id].points.length - 1].latlng
+        map.setView(latest_point, 16);
         description_div.innerHTML = `
         <h1>${global_data[id].name}</h1>
         <hr/>
