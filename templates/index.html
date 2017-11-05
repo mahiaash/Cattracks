@@ -1,115 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
-  
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-  crossorigin=""/>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+    crossorigin="" />
 
   <!-- Make sure you put this AFTER Leaflet's CSS -->
-  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
- integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
- crossorigin=""></script>
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+    crossorigin=""></script>
 
-  <link rel="stylesheet" href="/static/leaflet-beautify-marker-icon.css"/>
- <script src="/static/leaflet-beautify-marker-icon.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
+  <link rel="stylesheet" href="/static/leaflet-beautify-marker-icon.css" />
+  <script src="/static/leaflet-beautify-marker-icon.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
 
   <style>
-    #map{
-      height: 500px;
+    .darknav {
+      background-color: black;
     }
 
+    #map {
+      height: 500px;
+    }
   </style>
 
 </head>
 
-<body>
-<!-- <img src="{{url_for('static', filename='uploads/angry.jpg')}}"> -->
-<div class="container">
-  <div class="row">
-    <div class="col-9" id="map"></div>
-    <div class="col-3" id='cats'></div>
+<nav class="navbar sticky-top navbar-dark darknav">
+  <a class="navbar-brand" href="https://ibb.co/hFw4qw">
+    <img src="https://image.ibb.co/kCPDiG/rsz_1cat_tracks_title.png" alt="rsz_1cat_tracks_title" alt="cat_tracks_title" border="0">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="form-inline" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+          Add a Cat
+        </button>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Forum</a>
+      </li>
+    </ul>
   </div>
-</div>
+</nav>
+
+<body style="background-image:url('https://image.ibb.co/duYOiG/rsz_11rsz_1rsz_kitty_tracks.png')">
+
+  <!-- <img src="{{url_for( 'static', filename='uploads/angry.jpg' )}} "> -->
+  <div class="container ">
+    <div class="row ">
+      <div class="col-9 " id='map'></div>
+      <div class="col-3 " id='cats'></div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/cat/add " method="post " enctype="multipart/form-data ">
+            <div class="form-group ">
+              <label for="name "> Name </label>
+              <br>
+              <input type="text " name="name " placeholder="Name ">
+            </div>
+            <!-- Color textbox and label -->
+            <div class="form-group ">
+              <label for="color "> Color </label>
+              <br>
+              <input type="text " name="color " placeholder="Brown, Black, Etc ">
+            </div>
+            <!-- Description Label -->
+            <div class="form-group ">
+              <label for="desc "> Description
+                <label>
+                  <br>
+            </div>
+            <!-- Creation of the textarea -->
+            <div class="form-group ">
+              <textarea class="form-control " id="description " rows="3 "> </textarea>
+            </div>
+            <!-- Buttons for Unknown, spayed/neutured, natural -->
+            
+            <div data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="options" autocomplete="off" checked> Unknown
+              </label>
+              <label class="btn btn-secondary">
+                <input type="radio" name="options" autocomplete="off"> Spayed/Neutured
+              </label>
+              <label class="btn btn-secondary ">
+                <input type="radio" name="options" autocomplete="off"> Natural
+              </label>
+            </div>
+            <!-- Buttons for Feral, Domestic, Uknown -->
+            <br>
+
+            <div data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" checked autocomplete="off"> Unknown
+              </label>
+              <label class="btn btn-secondary ">
+                <input type="radio" autocomplete="off"> Domestic
+              </label>
+              <label class="btn btn-secondary ">
+                <input type="radio" autocomplete="off"> Feral
+              </label>
+            </div>
+            
+            <div class="form-group ">
+                <input type="submit " value="Add a cat" class="btn btn-primary ">
+            </div>
+
+          </form>
+          
+        </div>
+
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-<script>
-  //init map
-  var map = L.map('map').setView([43.003051,-78.787842], 15);
 
-  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
-      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      maxZoom: 15,
-      id: 'satellite-streets-v9',
-      accessToken: 'pk.eyJ1IjoibnljZG90IiwiYSI6IlhHQjNQRWMifQ.cz7P1kLgUTLOlt9Lc1RQvQ'
-  }).addTo(map);
+  <script>
+    //init map
+    var map = L.map('map').setView([43.003051, -78.787842], 15);
+
+    L.tileLayer(
+      'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org ">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 15,
+        id: 'satellite-streets-v9',
+        accessToken: 'pk.eyJ1IjoibnljZG90IiwiYSI6IlhHQjNQRWMifQ.cz7P1kLgUTLOlt9Lc1RQvQ'
+      }).addTo(map);
 
 
-  const cats_div = document.getElementById('cats')
+    const cats_div = document.getElementById('cats')
 
-  fetch('http://localhost:5000/cats')
-  .then(res=> res.json())
-  .then(data=>{
-    const amt_cats = Object.keys(data).length;
-    const color_scale = chroma.scale('Spectral').colors(amt_cats);
-    const cats = Object.keys(data).reduce((prev, cur, index)=>{
-    
-      //sort points by timestamp
-      const points = data[cur].points.sort((a,b) => {
-        return a.timestamp > b.timestamp
+    fetch('http://localhost:5000/cats')
+      .then(res => res.json())
+      .then(data => {
+        const amt_cats = Object.keys(data).length;
+        const color_scale = chroma.scale('Spectral').colors(amt_cats);
+        const cats = Object.keys(data).reduce((prev, cur, index) => {
+
+          //sort points by timestamp
+          const points = data[cur].points.sort((a, b) => {
+            return a.timestamp > b.timestamp
+          })
+
+          //add points to map
+          const options = {
+            iconShape: 'rectangle-dot',
+            borderWidth: 9,
+            borderColor: color_scale[index]
+          };
+
+          points.map(point => {
+            const datetime = new Date(point.timestamp * 1000);
+            const desc = point.desc || 'NA';
+            const popup = `last seen: ${datetime} doing ${desc}`
+            L.marker(point.latlng, {
+              icon: L.BeautifyIcon.icon(options)
+            }).addTo(map).bindPopup(popup);
+          })
+
+          //add polyline
+          const pointList = points.reduce((prev, point) => {
+            prev.push(new L.LatLng(point.latlng[0], point.latlng[1]));
+            return prev;
+          }, [])
+
+          new L.Polyline(pointList, {
+            color: color_scale[index],
+            weight: 3,
+            opacity: 0.5
+          }).addTo(map)
+
+
+          return prev +=
+            `<div class="card " style="margin-bottom: 10px; ">
+                        <img class="card-img-top " src="/static/uploads/${data[cur].points[0].image} ">
+                        <div class="card-block ">
+                        <h4 class="card-title " style="background-color: ${color_scale[index]} ">${data[cur].name}</h4>
+                        <p class="card-text ">${data[cur].color}</p>
+                        </div>
+                        </div>`
+        }, '')
+        cats_div.innerHTML = cats
+
       })
-
-      //add points to map
-      const options = {
-          iconShape: 'rectangle-dot',
-          borderWidth: 9,
-          borderColor: color_scale[index]
-      };
-
-      points.map(point => {
-        const datetime =  new Date(point.timestamp * 1000);
-        const desc = point.desc || 'NA';
-        const popup = `last seen: ${datetime} doing ${desc}`
-        L.marker(point.latlng, {icon: L.BeautifyIcon.icon(options)}).addTo(map).bindPopup(popup);
-      })
-
-      //add polyline
-      const pointList = points.reduce((prev,point)=> {
-        prev.push(new L.LatLng(point.latlng[0],point.latlng[1]));
-        return prev;
-      },[])
-
-      new L.Polyline(pointList, {
-        color: color_scale[index],
-        weight: 3,
-        opacity: 0.5
-      }).addTo(map)
-
-
-      return prev += `<div class="card" style="margin-bottom: 10px;">
-                      <img class="card-img-top" src="/static/uploads/${data[cur].points[0].image}">
-                      <div class="card-block">
-                      <h4 class="card-title" style="background-color: ${color_scale[index]}">${data[cur].name}</h4>
-                      <p class="card-text">${data[cur].color}</p>
-                      </div>
-                      </div>`
-    },'')
-    cats_div.innerHTML = cats
-
-  })
-  .catch(error => console.log(error))
-
-
-</script>
-
-</header>
+      .catch(error => console.log(error))
+  </script>
 
 </body>
+
 </html>

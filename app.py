@@ -35,7 +35,10 @@ DB = {
         ]},
 }
 
-
+#description
+@app.route('/description')
+def desc():
+    return render_template('description.html')
 #view
 @app.route('/')
 def hello_world():
@@ -52,8 +55,9 @@ def addCat():
     if request.method == 'POST':
         #get cat data and insert to database
         data = request.form
-        new_key = max(DB.keys()) + 1
-        DB[new_key] = data
+        print(request.form)
+        # new_key = max(DB.keys()) + 1
+        # DB[new_key] = data
         
         #return success or error message
         return jsonify(DB)
