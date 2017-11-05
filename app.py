@@ -20,8 +20,8 @@ DB = {
         'spayed_neutured': 'unknown',
         'feral_domestic': 'unknown',
         'points': [
-            {'image':'angry.jpg','latlng': (43.003158, -78.787532), 'timestamp': 1509768000,'desc':''},
-            {'image':'angry.jpg','latlng': (43.004028, -78.785915), 'timestamp': 1509796800,'desc':''}
+            {'image':'angry.jpg','latlng': (43.003158, -78.787532), 'timestamp': 1509768000,'desc':'angry'},
+            {'image':'derp.jpg','latlng': (43.004028, -78.785915), 'timestamp': 1509796800,'desc':'derppp'}
         ]},
     2 : {
         'name': 'Sam',
@@ -30,8 +30,8 @@ DB = {
         'spayed_neutured': 'unknown',
         'feral_domestic': 'unknown',
         'points': [
-            {'image':'j09w6p65.jpg','latlng': (43.004278, -78.789974), 'timestamp': 1509768000,'desc':''},
-            {'image':'j09w6p65.jpg','latlng': (43.006263, -78.785919), 'timestamp': 1509796800,'desc':''}
+            {'image':'j09w6p65.jpg','latlng': (43.004278, -78.789974), 'timestamp': 1509768000,'desc':'look a my bugs'},
+            {'image':'6v1hryov.jpg','latlng': (43.006263, -78.785919), 'timestamp': 1509796800,'desc':'please don\'t feed'}
         ]},
       3 : {
         'name': 'Octocat',
@@ -40,7 +40,7 @@ DB = {
         'spayed_neutured': 'unknown',
         'feral_domestic': 'unknown',
         'points': [
-            {'image':'Octocat.png','latlng': (43.002700, -78.787421), 'timestamp': 1509768000,'desc':''},
+            {'image':'Octocat.png','latlng': (43.002700, -78.787421), 'timestamp': 1509768000,'desc':'UBHacking 2k17!'},
            
         ]},  
 }
@@ -83,9 +83,9 @@ def getCatInfo(cat_id):
 def addPoint(cat_id):
     if cat_id in DB and request.method == 'POST':
         #save image
-        if 'image' in request.files:
-            file = request.files['image']
-            filename = file.filename
+        file = request.files['image']
+        filename = file.filename
+        if filename:
             f = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(f)
         else:

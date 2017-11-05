@@ -66,7 +66,7 @@
       <div class="col-9 top-row" id='map'></div>
       <div class="col-3 top-row all-cats" id='cats'></div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 10px;">
       <div class="col-lg-12" style="background-color: white;" id="description">click on a cat for more info...</div>
     </div>
   </div>
@@ -145,7 +145,7 @@
   <script>
 
     //init map
-    var map = L.map('map').setView([43.003051, -78.787842], 15);
+    var map = L.map('map').setView([43.003051, -78.787842], 16);
 
     L.tileLayer(
       'https://api.mapbox.com/styles/v1/mapbox/outdoors-v9/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
@@ -195,12 +195,12 @@
 
           points.map(point => {
             const datetime = new Date(point.timestamp * 1000);
-            const desc = point.desc || 'NA';
+            const desc = `doing: ${point.desc}` || '';
             let location_image = ''
             if(point.image.length > 1){
               location_image = `<img width="200px" src="/static/uploads/${point.image}">`
             }
-            const popup = `${location_image}<h3>last seen: ${datetime.toLocaleString()} doing ${desc}</h3>`
+            const popup = `${location_image}<h4>${desc}</h4><p>last seen: ${datetime.toLocaleString()}</p>`
             L.marker(point.latlng, {
               icon: L.BeautifyIcon.icon(options)
             }).addTo(map).bindPopup(popup);
@@ -245,6 +245,16 @@
           map.setView(latest_point, 16);
         }
 
+        //get geolocation
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            const latitude_input = document.getElementById('latitude')
+            const longitude_input = document.getElementById('longitude')
+            longitude_input.value = position.coords.longitude
+            latitude_input.value = position.coords.latitude
+          });
+        }
+
         description_div.innerHTML = `
         <h1>${global_data[id].name}</h1>
         <p>Color: ${global_data[id].color}</p>
@@ -264,8 +274,8 @@
           <div class="form-group">
             <label for="location">Location</label>
             </br>
-            <input type="text" class="form-control" name="longitude" placeholder="Longitude"> </br>
-            <input type="text" class="form-control" name="latitude" placeholder="Lattitude"> </br>
+            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Lattitude"> </br>
+            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude"> </br>
 
           </div>
 
