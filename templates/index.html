@@ -2,20 +2,72 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/app.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
 <header class="navbar">
-  <form action="/upload" method="post" enctype="multipart/form-data" >
-      <span class="btn btn-default btn-file">
-        Browse <input type="file" name="image">
-      </span>
-
-    <input type="submit" value="Upload your image" class="btn btn-primary">
-  </form>
 
 </header>
-
+<div class="container"
+    <form action="/cats" method="post" enctype="multipart/form-data" >
+      <div class="form-group">
+         <input type="submit" value="Upload your image" class="btn btn-primary">
+      </div>
+      <div class="form-group">
+        <label for="name"> Name </label> <br>
+        <input type="text" name="name" placeholder="Name">
+      </div>
+   <!-- Color textbox and label -->
+      <div class="form-group">
+        <label for="color"> Color </label> <br>
+        <input type="text" name="color" placeholder="Brown, Black, Etc">
+      </div>
+      <!-- Description Label -->
+  <div class ="form-group">
+    <label for="desc"> Description <label> <br>
+      </div>
+       <!-- Creation of the textarea -->
+      <div class="form-group">
+          <textarea class="form-control" id="description" rows="3" > </textarea> 
+      </div>
+       <!-- Buttons for Unknown, spayed/neutured, natural -->
+      
+     <div class="btn btn-dark" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> Unknown
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> Spayed/Neutured
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" name="options" id="option3" autocomplete="FF"> Natural
+  </label>
+</div>
+    <!-- Buttons for Feral, Domestic, Uknown -->
+     <br>
+      
+    <div class="btn btn-dark" data-toggle="buttons">
+  <label class="btn btn-secondary active">
+    <input type="radio" checked autocomplete="off"> Unknown
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" autocomplete="off"> Domestic
+  </label>
+  <label class="btn btn-secondary">
+    <input type="radio" autocomplete="off"> Feral
+  </label>
+</div>
+        </div>
+  </div>
+      </div>
+       
+      
+    </form>
+  </div>
 </body>
 </html>
