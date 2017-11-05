@@ -11,11 +11,14 @@ UPLOAD_FOLDER = os.path.basename('uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 DB = {
-    1 : {'name': 'Bella'},
+    1 : {'name': 'Bella', 'desc': 'brown'},
     2 : {'name': 'Sam'}
 }
 
-
+#description
+@app.route('/description')
+def desc():
+    return render_template('description.html')
 #view
 @app.route('/')
 def hello_world():
