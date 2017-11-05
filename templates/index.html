@@ -71,7 +71,7 @@
       <div class="col-3 top-row all-cats" id='cats'></div>
     </div>
     <div class="row">
-      <div style="background-color: white;" id="description">click on a cat for more info...</div>
+      <div class="col-lg-12" style="background-color: white;" id="description">click on a cat for more info...</div>
     </div>
   </div>
 
@@ -227,7 +227,37 @@
       .catch(error => console.log(error))
 
       function showCat(id){
-        description_div.innerHTML = `<h1>${global_data[id].name}</h1><input type="button" value="Add picture or location" class="btn btn-primary" onclick="alert('hello')"/>`
+        description_div.innerHTML = 
+        
+        `
+        <h1>${global_data[id].name}
+        
+          
+
+    <form action="/cats" method="post" enctype="multipart/form-data" >
+      <div class="form-group">
+         <input type="file" name="image" value="Upload Additional Image" >
+      </div>
+  <!-- Location longitude and lattitude -->
+      <div class="form-group">
+        <label for="location">Location</label> </br>
+        <input type ="number"  class="form-control" id=longitude placeholder="Longitude"> </br>
+        <input type ="number" class="form-control"  id=Latitude placeholder="Lattitude"> </br>
+          
+      </div>
+
+      <div class="form-group">
+       <label for="Additional Description">Additional Description</label> 
+       <div class="form-group">
+              <textarea class="form-control" name="description" id="description" rows="3 "> </textarea>
+            </div>
+      </div>
+  </div>
+    </form>
+    </div>`
+
+          
+            
       }
 
       //add Cat using POST request from the form
