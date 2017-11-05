@@ -1,18 +1,38 @@
 from flask import Flask, render_template, request, jsonify, abort
-import os, requests, json
+from flask_cors import CORS
+import os, json
 # from clarifai.rest import ClarifaiApp
 # from clarifai.rest import Image as ClImage
 
 # clarifai_app = ClarifaiApp(api_key='')
 
 app = Flask(__name__)
+CORS(app)
 
 UPLOAD_FOLDER = os.path.basename('uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 DB = {
-    1 : {'name': 'Bella'},
-    2 : {'name': 'Sam'}
+    1 : {
+        'name': 'Bella',
+        'color': 'black',
+        'desc': 'none',
+        'spray/neut': 'unknown',
+        'feral/domestic': 'unknown',
+        'points': [
+            {'image':'angry.jpg','latlng': (43.003158, -78.787532), 'timestamp': 1509768000,'desc':''},
+            {'image':'angry.jpg','latlng': (43.004028, -78.785915), 'timestamp': 1509796800,'desc':''}
+        ]},
+    2 : {
+        'name': 'Sam',
+        'color': 'black w brown',
+        'desc': 'none',
+        'spray/neut': 'unknown',
+        'feral/domestic': 'unknown',
+        'points': [
+            {'image':'angry.jpg','latlng': (43.004278, -78.789974), 'timestamp': 1509768000,'desc':''},
+            {'image':'angry.jpg','latlng': (43.006263, -78.785919), 'timestamp': 1509796800,'desc':''}
+        ]},
 }
 
 
