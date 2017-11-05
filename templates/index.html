@@ -244,8 +244,11 @@
 
       //when a cat is clicked, pan to latest point and change the description 
       function showCat(id){
-        const latest_point = global_data[id].points[global_data[id].points.length - 1].latlng
-        map.setView(latest_point, 16);
+        if(global_data[id].points.length > 0){
+          const latest_point = global_data[id].points[global_data[id].points.length - 1].latlng
+          map.setView(latest_point, 16);
+        }
+
         description_div.innerHTML = `
         <h1>${global_data[id].name}</h1>
         <hr/>
